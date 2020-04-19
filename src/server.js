@@ -7,5 +7,7 @@ const db = knex({
   client: 'pg',
   connection: DB_URL,
 });
+
+app.set('db', db); // everytime someone asks for db, they will get this variable
 app.listen(PORT, () => console.log(`Server listening in ${NODE_ENV} mode at http://localhost:${PORT}`));
 

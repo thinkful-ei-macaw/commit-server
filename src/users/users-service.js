@@ -2,15 +2,15 @@ const bcrypt = require('bcryptjs');
 const xss = require('xss');
 
 const UserService = {
-  hasUsername(knex, user_name) {
-    return knex
+  hasUsername(db, user_name) {
+    return db
       .from('commit_users')
       .where({user_name})
       .first()
-      .then(user => !!user);
+      .then(user => !!user); // !! = true
   },
-  insertUser(knex, newUser) {
-    return knex
+  insertUser(db, newUser) {
+    return db
       .insert(newUser)
       .into('commit_users')
       .returning('*')
@@ -18,30 +18,23 @@ const UserService = {
   },
   validatePassword(password) {
     if(password.length < 8) {
-      'Password must be longer than 8 characters'
+      'Password must be longer than 8 characters';
     }
-    if (password.length > 72) {
-      return 'Password be less than 72 characters'
+    if (password.startsWith(' ') || password.endsWith(' ')) {
+      return 'Password must be trimmed';
     }
-    if (password.startsWith(' ') || password.endsWith('')) {
-      return 'Password be less than 72 characters'
-    }
-    if (password.length > 72) {
-      return 'Password be less than 72 characters'
-    }
+
     return null;
   },
 
-  hasPassword(password) {
+  hashPassword(password) {
     return bcrypt.hash(password, 12);
   },
 
-  serializeUser(user) {
+  serializeUser(user) { // take users from db, putting it in object, xss is protecting sensitive info
     return {
       id: user.id,
-      full_name: xss(user.full_name),
       user_name: xss(user.user_name),
-      nickname: xss(user.nick_name),
       date_created: new Date(user.date_created),
     };
   },

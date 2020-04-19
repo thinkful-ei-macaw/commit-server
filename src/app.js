@@ -5,6 +5,11 @@ const cors = require('cors');
 const helmet = require('helmet');
 const winston = require('winston');
 const { NODE_ENV } = require('./config');
+const tasksRouter = require('./tasks/tasks-router');
+const userRouter = require('./users/users-router');
+const authRouter = require('./auth/auth-router');
+
+
 
 const app = express();
 
@@ -25,15 +30,23 @@ if (NODE_ENV !== 'production') {
     format: winston.format.simple()
   }));
 }
+
+
+
 // set up middleware
-app.use(morgan(morganOption));
+app.use(morgan(morganOption)); // setting up logging
 app.use(helmet());
 app.use(cors());
+app.use('/tasks', tasksRouter);
+app.use('/api/users', userRouter);
+app.use('/auth/login', authRouter);
 
 // request handling
 app.get('/tasks', (req, res, next) => {
   res.status(200).send('All tasks');
 });
+
+
 
 // error handling
 // eslint-disable-next-line no-unused-vars
