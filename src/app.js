@@ -39,7 +39,7 @@ app.use(helmet());
 app.use(cors());
 app.use('/tasks', tasksRouter);
 app.use('/api/users', userRouter);
-app.use('/auth/login', authRouter);
+app.use('/api/auth', authRouter);
 
 // request handling
 app.get('/tasks', (req, res, next) => {

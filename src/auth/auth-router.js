@@ -4,7 +4,7 @@ const AuthService = require('./auth-service');
 const authRouter = express.Router();
 
 authRouter
-  .post('/', jsonBodyParser, (req, res, next) => {
+  .post('/login', jsonBodyParser, (req, res, next) => {
     const {
       user_name,
       password
@@ -13,7 +13,6 @@ authRouter
       user_name,
       password
     };
-    console.log(user);
     for (const [key, value] of Object.entries(user))
       if (value == null)
         return res.status(400).json({
@@ -22,18 +21,18 @@ authRouter
 
     AuthService.getUserWithUserName(
       req.app.get('db'),
-      user.name
+      user.user_name
     )
       .then(dbUser => {
         if (!dbUser)
           return res.status(400).json({
-            error: 'Incorrect name or password'
+            error: 'Incorrect name or 1password'
           });
         return AuthService.comparePasswords(user.password, dbUser.password)
           .then(compareMatch => {
             if (!compareMatch)
               return res.status(400).json({
-                error: 'Incorrect name or password'
+                error: 'Incorrect name or 2password'
               });
 
             const sub = dbUser.user_name;

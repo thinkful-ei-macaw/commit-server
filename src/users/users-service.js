@@ -2,6 +2,9 @@ const bcrypt = require('bcryptjs');
 const xss = require('xss');
 
 const UserService = {
+  getAllUsers(knex) {
+    return knex('commit_users').select('*');
+  },
   hasUsername(db, user_name) {
     return db
       .from('commit_users')
@@ -9,12 +12,15 @@ const UserService = {
       .first()
       .then(user => !!user); // !! = true
   },
+  getById(knex, id) {
+    return knex('commit_users').select('*').where({id}).first();
+  },
   insertUser(db, newUser) {
     return db
       .insert(newUser)
       .into('commit_users')
       .returning('*')
-      .then(([user]) => user);
+      .then(rows => rows[0]);
   },
   validatePassword(password) {
     if(password.length < 8) {
