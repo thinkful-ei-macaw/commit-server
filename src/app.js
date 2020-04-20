@@ -51,6 +51,7 @@ app.get('/tasks', (req, res, next) => {
 // error handling
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (error, req, res, next) => {
+  console.log(error)
   let response;
   if (NODE_ENV === 'production') {
     response = { error: { message: 'Server error' } };

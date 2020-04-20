@@ -2,6 +2,7 @@ const express = require('express');
 const jsonBodyParser = express.json();
 const AuthService = require('./auth-service');
 const authRouter = express.Router();
+const bcrypt =  require('bcryptjs');
 
 authRouter
   .post('/login', jsonBodyParser, (req, res, next) => {
@@ -13,6 +14,7 @@ authRouter
       user_name,
       password
     };
+    console.log(password)
     for (const [key, value] of Object.entries(user))
       if (value == null)
         return res.status(400).json({
@@ -21,19 +23,24 @@ authRouter
 
     AuthService.getUserWithUserName(
       req.app.get('db'),
-      user.user_name
+      user_name
     )
       .then(dbUser => {
         if (!dbUser)
           return res.status(400).json({
             error: 'Incorrect name or 1password'
           });
-        return AuthService.comparePasswords(user.password, dbUser.password)
+         console.log(user_name, dbUser);
+         console.log(bcrypt.compareSync('2544252', dbUser.password));
+         console.log(dbUser.password)
+        return AuthService.comparePasswords(password, dbUser.password)
+       
           .then(compareMatch => {
-            if (!compareMatch)
+            if (!compareMatch) {
               return res.status(400).json({
                 error: 'Incorrect name or 2password'
               });
+            }
 
             const sub = dbUser.user_name;
             const payload = {
