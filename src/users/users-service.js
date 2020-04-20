@@ -36,7 +36,9 @@ const UserService = {
   hashPassword(password) {
     return bcrypt.hash(password, 12);
   },
-
+  deleteUser(knex, id) {
+    return knex('commit_users').where({id}).delete();
+  },
   serializeUser(user) { // take users from db, putting it in object, xss is protecting sensitive info
     return {
       id: user.id,

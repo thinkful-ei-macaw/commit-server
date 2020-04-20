@@ -1,8 +1,6 @@
 INSERT INTO commit_users (user_name, password)
 VALUES 
-('Jordan', '$2a$12$HlygdTr
-PlVI9HtrbSOekFu3J98s.Wb
-BUQtc4RXOG.yUvypwAtI2zq'),
+('Jordan', '$2a$12$HlygdTrPlVI9HtrbSOekFu3J98s.WbBUQtc4RXOG.yUvypwAtI2zq'),
 ('Keani', '224t24t542'),
 ('JC', 'safsavsa5'),
 ('Zoey', 'safsadvsadv6'),
