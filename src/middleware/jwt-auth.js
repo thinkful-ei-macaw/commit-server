@@ -13,7 +13,7 @@ function requireAuth(req, res, next) {
   }
 
   try {
-    console.log(bearerToken)
+  
     const payload = AuthService.verifyJwt(bearerToken)
 
     AuthService.getUserWithUserName(
@@ -37,7 +37,7 @@ function requireAuth(req, res, next) {
     res.status(401).json({
       error: 'Unauthorized request'
     })
-    console.log(error)
+ 
   }
 }
 

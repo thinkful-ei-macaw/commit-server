@@ -11,7 +11,7 @@ const serializeTasks = task => ({
   name: xss(task.name), 
   complete: task.complete
 });
-tasksRouter.use(requireAuth)
+tasksRouter.use(requireAuth);
 tasksRouter
   .route('/')
   .get(requireAuth, (req, res, next) => {
@@ -94,7 +94,7 @@ tasksRouter
       req.params.task_id
     )
       .then(() => {
-        res.status(204).end()
+        res.status(204).end();
       })
       .catch(next);
   });

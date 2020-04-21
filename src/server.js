@@ -1,11 +1,15 @@
 /* eslint-disable no-console */
 const app = require('./app');
 const knex = require('knex');
-const { NODE_ENV, PORT, DB_URL } = require('./config');
+const {
+  NODE_ENV,
+  PORT,
+  DATABASE_URL
+} = require('./config');
 
 const db = knex({
   client: 'pg',
-  connection: DB_URL,
+  connection: DATABASE_URL,
 });
 
 app.set('db', db); // everytime someone asks for db, they will get this variable
