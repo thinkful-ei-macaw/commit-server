@@ -29,11 +29,17 @@ const TaskService = {
       .then(rows => rows[0]);
   },
 
-  updateTask(knex, newTask) {
-    return knex('commit_task').where({
-      id: newTask.id
+  updateTask(knex, newTask, id) {
+    return knex('commit_tasks').where({
+      id
     }).update(newTask);
   },
+  deleteAllTasks(knex, id) {
+    return knex
+      .from('commit_tasks')
+      .where({ user_id: id })
+      .delete();
+  }
 };
 
 

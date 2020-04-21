@@ -11,7 +11,7 @@ const serializeTasks = task => ({
   name: xss(task.name), 
   complete: task.complete
 });
-
+tasksRouter.use(requireAuth)
 tasksRouter
   .route('/')
   .get(requireAuth, (req, res, next) => {
@@ -22,7 +22,7 @@ tasksRouter
       })
       .catch(next);
   })
-  .post(requireAuth, jsonParser, (req, res, next) => {
+  .post(jsonParser, (req, res, next) => {
     const {name} = req.body;
     const newTask = {name, complete: false, user_id: req.user.id};
     TaskService.insertTask(
@@ -36,12 +36,19 @@ tasksRouter
           .json(task);
       })
       .catch(next);
+  })
+  .delete((req, res, next) => {
+    const {id} = req.user;
+    TaskService.deleteAllTasks(req.app.get('db'), id)
+      .then(() => {
+        res.status(204).end();
+      });
   });
   
   
 tasksRouter
   .route('/:task_id')
-  .get((req, res, next) => {
+  .all((req, res, next) => {
     const knexInstance = req.app.get('db');
     TaskService.getTaskByID(knexInstance, req.params.task_id)
       .then(task => {
@@ -52,13 +59,21 @@ tasksRouter
             }
           });
         }
+        next();
+      })
+      .catch(next);
+  })
+  .get((req, res, next) => {
+    const knexInstance = req.app.get('db');
+    TaskService.getTaskByID(knexInstance, req.params.task_id)
+      .then(task => {
         res.json(
           serializeTasks(task)
         );
       })
       .catch(next);
   })
-  .delete(requireAuth, (req, res, next) => {
+  .delete((req, res, next) => {
     const knexInstance = req.app.get('db');
     TaskService.deleteTask(
       knexInstance,
@@ -69,16 +84,17 @@ tasksRouter
       })
       .catch(next);
   })
-  .patch(requireAuth, (req, res, next) => {
+  .patch(jsonParser, (req, res, next) => {
     const knexInstance = req.app.get('db');
-    const {name, complete} = req.body; // take values from body
+    const {name, complete} = req.body.task; // take values from body
     const newTask = {name, complete}; // storing in variable
     TaskService.updateTask(
       knexInstance,
-      newTask
+      newTask,
+      req.params.task_id
     )
-      .then(task => {
-        res.json(task);
+      .then(() => {
+        res.status(204).end()
       })
       .catch(next);
   });

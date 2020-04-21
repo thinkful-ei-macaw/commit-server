@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
   res.send('Hello, world!');
 });
 
-// error handling
+
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (error, req, res, next) => {
   let response;
@@ -56,7 +56,7 @@ const errorHandler = (error, req, res, next) => {
   } else {
     response = { message: error.message, error };
   }
-console.log(error)
+console.log(response)
   res.status(500).json(response);
 };
 
