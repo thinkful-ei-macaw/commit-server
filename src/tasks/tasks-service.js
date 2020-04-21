@@ -1,8 +1,9 @@
 const TaskService = {
-  getAllTasks(knex) {
+  getAllTasks(knex, user_id) {
     return knex
       .select('*')
-      .from('commit_tasks');
+      .from('commit_tasks')
+      .where({user_id});
   },
 
   getTaskByID(knex, id) {
@@ -23,7 +24,7 @@ const TaskService = {
   insertTask(knex, newTask) {
     return knex
       .insert(newTask)
-      .into('commit_users')
+      .into('commit_tasks')
       .returning('*')
       .then(rows => rows[0]);
   },
@@ -32,7 +33,7 @@ const TaskService = {
     return knex('commit_task').where({
       id: newTask.id
     }).update(newTask);
-  }
+  },
 };
 
 

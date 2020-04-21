@@ -2,34 +2,38 @@ const express = require('express');
 const TaskService = require('./tasks-service');
 const {requireAuth} = require('../middleware/jwt-auth');
 const tasksRouter = express.Router();
+const jsonParser = express.json();
+const xss = require('xss');
+
 
 const serializeTasks = task => ({
   id: task.id,
-  name: task.name, 
+  name: xss(task.name), 
   complete: task.complete
 });
 
 tasksRouter
   .route('/')
-  .get((req, res, next) => {
+  .get(requireAuth, (req, res, next) => {
     const knexInstance = req.app.get('db');
- 
-    TaskService.getAllTasks(knexInstance)
-      .then(task => {
-        res.json(task.map(serializeTasks));
+    TaskService.getAllTasks(knexInstance, req.user.id)
+      .then(tasks => {
+        res.json(tasks.map(serializeTasks));
       })
       .catch(next);
   })
-  .post(requireAuth, (req, res, next) => {
-    const knexInstance = req.app.get('db');
+  .post(requireAuth, jsonParser, (req, res, next) => {
     const {name} = req.body;
-    const newTask = {name, complete: false};
+    const newTask = {name, complete: false, user_id: req.user.id};
     TaskService.insertTask(
-      knexInstance,
+      req.app.get('db'),
       newTask
     )
       .then(task => {
-        res.json(task);
+        res
+          .status(201)
+          .location(`'/tasks/${task.id}`)
+          .json(task);
       })
       .catch(next);
   });
@@ -37,7 +41,7 @@ tasksRouter
   
 tasksRouter
   .route('/:task_id')
-  .all((req, res, next) => {
+  .get((req, res, next) => {
     const knexInstance = req.app.get('db');
     TaskService.getTaskByID(knexInstance, req.params.task_id)
       .then(task => {
@@ -48,13 +52,11 @@ tasksRouter
             }
           });
         }
-        res.task = task;
-        next();
+        res.json(
+          serializeTasks(task)
+        );
       })
       .catch(next);
-  })
-  .get((req, res, next) => {
-    res.json(serializeTasks(res.task));
   })
   .delete(requireAuth, (req, res, next) => {
     const knexInstance = req.app.get('db');
