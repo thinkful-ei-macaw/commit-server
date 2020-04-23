@@ -25,7 +25,7 @@ describe('Tasks Endpoints', function () {
   afterEach('cleanup', () => helpers.cleanTables(db))
 
   describe(`GET /api/tasks`, () => {
-    context(`Given no task`, () => {
+    context(`Given no tasks`, () => {
       beforeEach('insert users', () => {
          helpers.seedUsers(db, testUsers)
       })
@@ -47,18 +47,23 @@ describe('Tasks Endpoints', function () {
       )
 
       it.only('responds with 200 and all of the tasks', () => {
+     
         const expectedTasks = testTasks.map(task =>
 
           helpers.makeExpectedTask(task),
     
         )
         console.log(expectedTasks)
-        console.log('yadddas')
         return supertest(app)
           .get('/api/tasks')
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
           .expect(200, expectedTasks)
       })
     })
+
+    
+
+
+
   })
 })

@@ -50,7 +50,10 @@ authRouter
             });
           });
       })
-      .catch(next);
+      .catch(error => {
+        console.log('this is an error', error);
+        next(error);
+      });
   });
 
 authRouter.post('/refresh', requireAuth, (req, res) => {
