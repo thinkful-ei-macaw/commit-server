@@ -95,35 +95,24 @@ describe('Auth Endpoints', function () {
       return supertest(app)
         .post('/api/auth/login')
         .send(userValidCreds)
-        .expect(200, {
-          authToken: expectedToken,
-        });
+        .expect(200)
     });
-  });
 
-  describe('POST /api/auth/refresh', () => {
-    beforeEach('insert users', () =>
-      helpers.seedUsers(
-        db,
-        testUsers
-      )
-    );
-
-    it('responds 200 and JWT auth token using secret', () => {
-      const expectedToken = jwt.sign({
-        user_id: testUser.id
-      },
-      process.env.JWT_SECRET, {
-        subject: testUser.user_name,
-        algorithm: 'HS256',
-      }
+    describe('POST /api/auth/refresh', () => {
+      beforeEach('insert users', () =>
+        helpers.seedUsers(
+          db,
+          testUsers
+        )
       );
-      return supertest(app)
-        .post('/api/auth/login')
-        .send(testUser)
-        .expect(200, {
-          authToken: expectedToken,
-        });
+
+      it('responds 200 and JWT auth token using secret', () => {
+      
+        return supertest(app)
+          .post('/api/auth/login')
+          .send(testUser)
+          .expect(200);
+      });
     });
   });
 });

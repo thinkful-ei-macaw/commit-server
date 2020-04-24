@@ -12,6 +12,6 @@ const db = knex({
   connection: DATABASE_URL,
 });
 
-app.set('db', db); // everytime someone asks for db, they will get this variable
+app.set('db', db); // every time someone asks for db, they will get this variable
 app.listen(PORT, () => console.log(`Server listening in ${NODE_ENV} mode at http://localhost:${PORT}`));
 
