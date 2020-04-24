@@ -19,16 +19,16 @@ https://git.heroku.com/serene-peak-53258.git/tasks
       "id": "1",
       "name": "45-minute coding session",
       "complete": "true",
-      "date_modified": "2020-04-24T05:15:33.375Z"
-      "user_id": 5
+      "date_modified": "2020-04-24T05:15:33.375Z",
+      "user_id": 5,
       "streaks": 12
     },
     {
       "id": "10",
       "name": "30-minute coding session",
       "complete": "true",
-      "date_modified": "2020-04-24T05:15:33.375Z"
-      "user_id": 3
+      "date_modified": "2020-04-24T05:15:33.375Z",
+      "user_id": 3,
       "streaks": 19
     }
   ]
