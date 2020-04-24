@@ -3,16 +3,39 @@ Back-end framework providing data to the Commit app
 
 ## API Documentation 
 
-# GET/[tasks]
+# POST /api/auth/login
+
+Retrieve a bearer token via the JWT path
+
+```HTTP STATUS 200
+
+https://serene-peak-53258.herokuapp.com/api/auth/login
+
+
+*Example request/response:*
+
+    {
+      "uername": "Sarah",
+      "password": "12345678
+    },
+    
+     {
+    "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE1ODc2OTcxNTIsImV4cCI6MTU4NzcwNzk1Miwic3ViIjoiSm9yZGFuIn0.rXD8ZL0-8bzjzmwzOViDop0ctsWCdoGdkJVsjwwW4Bw"
+     }
+
+
+``` 
+
+# GET/api/[tasks]
 
 Provides an array of all task objects
 
-*Example request/response: 
+*Example request/response:*
 
 
 ```HTTP STATUS 200 
 
-https://git.heroku.com/serene-peak-53258.git/tasks
+https://serene-peak-53258.herokuapp.com/api/tasks
 
  [
     {
@@ -35,7 +58,7 @@ https://git.heroku.com/serene-peak-53258.git/tasks
   ```
   ---
   
-# POST/[tasks]
+# POST /api/[tasks]
 
 Creates a new task. Requires a request body. 
 
@@ -50,7 +73,7 @@ user_id | INTEGER
 **Example request/response:**
 
 ```
-POST https://git.heroku.com/serene-peak-53258.git/tasks
+POST https://serene-peak-53258.herokuapp.com/api/tasks
 
   REQ BODY: { "name": "Task", "complete": "false" }
 
@@ -59,7 +82,7 @@ POST https://git.heroku.com/serene-peak-53258.git/tasks
 
 --- 
  
-# PATCH/[tasks/:id]
+# PATCH /api/[tasks/:id]
 
 Updates task matching id with the fileds provided. Requires a request body with at least one valid field. 
 
@@ -71,21 +94,21 @@ complete | BOOLEAN, TRUE
 **Example request/response:**
 
 ```
-POST https://git.heroku.com/serene-peak-53258.git/tasks/2
+POST https://serene-peak-53258.herokuapp.com/api/tasks/2
 
   REQ BODY: { id: "3", complete": "false" }
 
   HTTP STATUS 200 OK
  ```
  
-# DELETE/[tasks/:id]
+# DELETE /api/[tasks/:id]
 
 Deletes item matching id parameter
 
 **Example request/response:**
 
 ```
- DELETE https://git.heroku.com/serene-peak-53258.git/tasks/2
+ DELETE https://git.heroku.com/serene-peak-53258.git/api/tasks/2
     
   HTTP STATUS 200 OK
   {} (empty)
