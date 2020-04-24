@@ -27,25 +27,25 @@ function makeUsersArray() {
 
 function makeTasksArray() {
   return [{
-      user_id: 10,
+      user_id: 4,
       id: 1,
       name: 'First test task!',
       complete: false
     },
     {
-      user_id: 8,
+      user_id: 4,
       id: 2,
       name: 'Second test post!',
       complete: false
     },
     {
-      user_id: 9,
+      user_id: 10,
       id: 3, 
       name: 'First test task!',
       complete: false
     },
     {
-      user_id: 10,
+      user_id: 8,
       id: 4,
       name: 'First test task!',
       complete: false
@@ -57,6 +57,7 @@ function makeExpectedTask(task) {
   return {
     id: task.id,
     name: task.name,
+    complete: task.complete, 
   }
 }
 
@@ -113,7 +114,7 @@ function seedTasksTables(db, users, tasks) {
        )
     }
      catch (error) {
-       console.log(error)
+       
      }
     
   })
