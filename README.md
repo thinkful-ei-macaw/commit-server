@@ -18,8 +18,7 @@ https://serene-peak-53258.herokuapp.com/api/auth/login
       "user_name": "Sarah",
       "password": "12345678
 }
-    ```
-    ```
+    
 {
      
     "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE1ODc2OTcxNTIsImV4cCI6MTU4NzcwNzk1Miwic3ViIjoiSm9yZGFuIn0.rXD8ZL0-8bzjzmwzOViDop0ctsWCdoGdkJVsjwwW4Bw"
