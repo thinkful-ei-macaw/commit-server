@@ -22,29 +22,30 @@ describe('Tasks Endpoints', function () {
 
   before('cleanup', () => helpers.cleanTables(db))
 
+    
   afterEach('cleanup', () => helpers.cleanTables(db))
 
   describe(`GET /api/tasks`, () => {
     context(`Given no tasks`, () => {
-      beforeEach('insert users', () => {
+      beforeEach('insert users', () =>
         helpers.seedUsers(db, testUsers)
-      })
+      )
       it(`responds with 200 and an empty list`, () => {
         return supertest(app)
           .get('/api/tasks')
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+          // .send(user)
           .expect(200, [])
       })
     })
 
     context('Given there are tasks in the database', () => {
-      beforeEach('insert tasks', () =>
-        helpers.seedTasksTables(
-          db,
-          testUsers,
-          testTasks
-        )
-      )
+     beforeEach('insert tasks', () =>
+         helpers.seedTasksTables(
+           db,
+           testUsers,
+           testTasks
+         ))
 
       it('responds with 200 and all of the tasks', () => {
 
@@ -110,6 +111,7 @@ describe('Tasks Endpoints', function () {
 
 
       describe(`PATCH /tasks`, () => {
+       
         it(`should update task to true`, function () {
           const newTask = {
             task: {
@@ -120,7 +122,8 @@ describe('Tasks Endpoints', function () {
 
 
           }
-          const id = 4
+          const id = 1
+          
           return supertest(app)
             .patch(`/api/tasks/${id}`)
             .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
@@ -129,10 +132,6 @@ describe('Tasks Endpoints', function () {
 
         })
       })
-
-
-
-
     })
   })
 })

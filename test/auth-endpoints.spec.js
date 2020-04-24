@@ -23,15 +23,16 @@ describe('Auth Endpoints', function () {
 
   before('cleanup', () => helpers.cleanTables(db));
 
+  beforeEach('insert users', () =>
+    helpers.seedUsers(
+      db,
+      testUsers
+    ));
+
   afterEach('cleanup', () => helpers.cleanTables(db));
 
   describe('POST /api/auth/login', () => {
-    beforeEach('insert users', () =>
-      helpers.seedUsers(
-        db,
-        testUsers
-      )
-    );
+    
 
     const requiredFields = ['user_name', 'password'];
 
@@ -95,22 +96,21 @@ describe('Auth Endpoints', function () {
       return supertest(app)
         .post('/api/auth/login')
         .send(userValidCreds)
-        .expect(200)
+        .expect(200);
     });
 
     describe('POST /api/auth/refresh', () => {
-      beforeEach('insert users', () =>
-        helpers.seedUsers(
-          db,
-          testUsers
-        )
-      );
+      
 
       it('responds 200 and JWT auth token using secret', () => {
-      
+        const user = {
+          user_name: testUser.user_name,
+          password: testUser.password,
+        };
+
         return supertest(app)
           .post('/api/auth/login')
-          .send(testUser)
+          .send(user)
           .expect(200);
       });
     });

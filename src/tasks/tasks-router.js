@@ -88,6 +88,7 @@ tasksRouter
     const knexInstance = req.app.get('db');
     const {name, complete} = req.body.task; // take values from body
     const newTask = {name, complete}; // storing in variable
+    
     TaskService.updateTask(
       knexInstance,
       newTask,
