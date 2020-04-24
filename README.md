@@ -47,7 +47,7 @@ id | INTEGER
 user_id | INTEGER
 
 
-~Example request/response:~
+**Example request/response:**
 
 ```
 POST https://git.heroku.com/serene-peak-53258.git/tasks
@@ -68,7 +68,7 @@ Key | Value
 id | 1
 complete | BOOLEAN, TRUE
 
-~Example request/response:~
+**Example request/response:**
 
 ```
 POST https://git.heroku.com/serene-peak-53258.git/tasks/2
@@ -82,7 +82,7 @@ POST https://git.heroku.com/serene-peak-53258.git/tasks/2
 
 Deletes item matching id parameter
 
-Example request/response: 
+**Example request/response:**
 
 ```
  DELETE https://git.heroku.com/serene-peak-53258.git/tasks/2
