@@ -7,26 +7,29 @@ Back-end framework providing data to the Commit app
 
 Retrieve a bearer token via the JWT path
 
-```HTTP STATUS 200
+HTTP STATUS 200
 
 https://serene-peak-53258.herokuapp.com/api/auth/login
 
 
 *Example request/response:*
-
-    {
-      "uername": "Sarah",
+```
+{
+      "user_name": "Sarah",
       "password": "12345678
-    },
-    
-     {
+}
+    ```
+    ```
+{
+     
     "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE1ODc2OTcxNTIsImV4cCI6MTU4NzcwNzk1Miwic3ViIjoiSm9yZGFuIn0.rXD8ZL0-8bzjzmwzOViDop0ctsWCdoGdkJVsjwwW4Bw"
-     }
-
+    
+}
+     
 
 ``` 
 
-# GET/api/[tasks]
+# GET/api/tasks
 
 Provides an array of all task objects
 
@@ -58,7 +61,7 @@ https://serene-peak-53258.herokuapp.com/api/tasks
   ```
   ---
   
-# POST /api/[tasks]
+# POST /api/tasks
 
 Creates a new task. Requires a request body. 
 
@@ -82,7 +85,7 @@ POST https://serene-peak-53258.herokuapp.com/api/tasks
 
 --- 
  
-# PATCH /api/[tasks/:id]
+# PATCH /api/tasks/:id
 
 Updates task matching id with the fileds provided. Requires a request body with at least one valid field. 
 
@@ -101,7 +104,7 @@ POST https://serene-peak-53258.herokuapp.com/api/tasks/2
   HTTP STATUS 200 OK
  ```
  
-# DELETE /api/[tasks/:id]
+# DELETE /api/tasks/:id
 
 Deletes item matching id parameter
 
