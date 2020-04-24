@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+
 const app = require('./app');
 const knex = require('knex');
 const {

@@ -42,7 +42,7 @@ describe('Tasks Endpoints', function () {
         helpers.seedTasksTables(
           db,
           testUsers,
-          testTasks,
+          testTasks
         )
       )
 
