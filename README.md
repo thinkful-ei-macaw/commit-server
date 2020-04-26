@@ -15,7 +15,7 @@ Link to Heroku Server: https://serene-peak-53258.herokuapp.com/
 HTML, CSS, React, NodeJS, Express, PostgreSQL
 
 ### Screenshot 
-![screenshot](./repo-images/screenshot.png)
+![screenshot](./repo-image/server-side.png)
 
 
 ### Setting up 
@@ -40,10 +40,10 @@ HTML, CSS, React, NodeJS, Express, PostgreSQL
 
 ### Sample Data
 
-To seed the user database for development: psql -U jordanknox -d commit -a -f seeds/seed.commit_users.sql
-To seed the tasks database for development: psql -U jordanknox -d commit -a -f seeds/seed.commit_tasks.sql
-To clear user data: psql -U jordanknox -d commit_users -a -f seeds/trunc.commit_users.sql
-To clear user data: psql -U jordanknox -d commit_tasks -a -f seeds/trunc.commit_tasks.sql
+* To seed the user database for development: psql -U jordanknox -d commit -a -f seeds/seed.commit_users.sql
+* To seed the tasks database for development: psql -U jordanknox -d commit -a -f seeds/seed.commit_tasks.sql
+* To clear user data: psql -U jordanknox -d commit_users -a -f seeds/trunc.commit_users.sql
+* To clear user data: psql -U jordanknox -d commit_tasks -a -f seeds/trunc.commit_tasks.sql
 
 ### Scripts
 
@@ -198,6 +198,6 @@ Deletes item matching id parameter
 ```
 ### To-do:'s
 
-- []  Finish implementing break notifications   
+- [ ]  Finish implementing break notifications   
 - [ ] User registration 
 - [ ] Streak emoji updates based on streak count
