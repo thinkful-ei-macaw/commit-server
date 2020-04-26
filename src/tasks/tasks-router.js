@@ -11,7 +11,12 @@ const serializeTasks = task => ({
   name: xss(task.name), 
   complete: task.complete
 });
+
+/** Require all endpoints to require a authorized user */
+
 tasksRouter.use(requireAuth);
+
+/** Endpoint for getting all tasks */
 tasksRouter
   .route('/')
   .get(requireAuth, (req, res, next) => {
@@ -22,35 +27,30 @@ tasksRouter
       })
       .catch(next);
   })
+
+/** Endpoint for creating a task */
+
   .post(jsonParser, (req, res, next) => {
-    const {name} = req.body;
-    const newTask = {name, complete: false, user_id: req.user.id};
-    TaskService.insertTask(
+    const {name} = req.body; // Capturing the task name from the request body 
+    const newTask = {name, complete: false, user_id: req.user.id}; // Passing task values into an object
+    TaskService.insertTask( // Callign method that inserts a new task into the database 
       req.app.get('db'),
       newTask
     )
       .then(task => {
         res
-          .status(201)
+          .status(201) 
           .location(`'/tasks/${task.id}`)
           .json(task);
       })
       .catch(next);
-  })
-  .delete((req, res, next) => {
-    const {id} = req.user;
-    TaskService.deleteAllTasks(req.app.get('db'), id)
-      .then(() => {
-        res.status(204).end();
-      });
-  });
-  
+  }),
   
 tasksRouter
-  .route('/:task_id')
+  .route('/:task_id') // Endpoint responsible for getting a task by its ID
   .all((req, res, next) => {
-    const knexInstance = req.app.get('db');
-    TaskService.getTaskByID(knexInstance, req.params.task_id)
+    const knexInstance = req.app.get('db'); 
+    TaskService.getTaskByID(knexInstance, req.params.task_id) // Capture task_id from URL parameter. 
       .then(task => {
         if (!task) {
           return res.status(404).json({
@@ -87,9 +87,9 @@ tasksRouter
   .patch(jsonParser, (req, res, next) => {
     const knexInstance = req.app.get('db');
     const {name, complete} = req.body.task; // take values from body
-    const newTask = {name, complete}; // storing in variable
+    const newTask = {name, complete}; // storing values in variable
     
-    TaskService.updateTask(
+    TaskService.updateTask( // pass newTask object and id to updateTask method when a task is marked complete
       knexInstance,
       newTask,
       req.params.task_id

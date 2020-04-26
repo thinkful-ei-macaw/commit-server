@@ -7,6 +7,8 @@ const {
 const authRouter = express.Router();
 const jsonBodyParser = express.json();
 
+/** Responsible for logging in a user */
+
 authRouter
   .post('/login', jsonBodyParser, (req, res, next) => {
     const {
@@ -18,12 +20,16 @@ authRouter
       password
     };
 
+    /** Send an error message if user_name or password is missing in body*/
+
     for (const [key, value] of Object.entries(loginUser))
       if (value == null)
         return res.status(400).json({
           error: `Missing '${key}' in request body`
         });
 
+
+    /** Send error message is user_name or password does not match creds in db */
     AuthService.getUserWithUserName(
       req.app.get('db'),
       loginUser.user_name
@@ -33,6 +39,8 @@ authRouter
           return res.status(400).json({
             error: 'Incorrect user_name or password',
           });
+
+        /** Send error message if string pw does not match db password*/
 
         return AuthService.comparePasswords(loginUser.password, dbUser.password)
           .then(compareMatch => {

@@ -1,9 +1,58 @@
-# Commit Server
+# Commit
+
 Back-end framework providing data to the Commit app
+
+### Summary
+
+Commit is a simple solution for building healthier coding habits. Designed for entry-level software engineers. Learning how to code can be exhausting. Earn your streaks by taking breaks after completing coding sessions.
+
+Live at: https://commit.jknox24.now.sh/
+
+Link to Heroku Server: https://serene-peak-53258.herokuapp.com/
+
+### Technologies Used
+
+HTML, CSS, React, NodeJS, Express, PostgreSQL
+
+### Screenshot 
+![screenshot](./repo-images/screenshot.png)
+
+
+### Setting up 
+
+* Install dependencies: npm install
+* Create development and test databases: createdb commit, createdb commit-test
+* Create database user: createuser jordanknox
+* Grant privileges to new user in psql:
+* GRANT ALL PRIVILEGES ON DATABASE commit TO jordanknox
+* GRANT ALL PRIVILEGES ON DATABASE "commit-test" TO jordanknox
+* Prepare environment file: cp example.env .env
+* Replace values in .env with:
+  * NODE_ENV=development
+  * PORT=8080
+  * API_TOKEN="your-token-here"
+  * DATABASE_URL="postgresql://jordanknox@localhost/commit"
+  * JWT_SECRET="jordans-jwt-secret"
+  * TEST_DB_URL="postgresql://jordanknox@localhost/commit-test"
+* Bootstrap development database: npm run migrate
+* Bootstrap test database: npm run migrate:test
+
+
+### Sample Data
+
+To seed the user database for development: psql -U jordanknox -d commit -a -f seeds/seed.commit_users.sql
+To seed the tasks database for development: psql -U jordanknox -d commit -a -f seeds/seed.commit_tasks.sql
+To clear user data: psql -U jordanknox -d commit_users -a -f seeds/trunc.commit_users.sql
+To clear user data: psql -U jordanknox -d commit_tasks -a -f seeds/trunc.commit_tasks.sql
+
+### Scripts
+
+* Start application for development: npm run dev
+* Run tests: npm test
 
 ## API Documentation 
 
-# POST /api/auth/login
+###  POST /api/auth/login
 
 Retrieve a bearer token via the JWT path
 
@@ -28,7 +77,7 @@ https://serene-peak-53258.herokuapp.com/api/auth/login
 
 ``` 
 
-# GET/api/tasks
+### GET/api/tasks
 
 Provides an array of all task objects
 
@@ -60,7 +109,39 @@ https://serene-peak-53258.herokuapp.com/api/tasks
   ```
   ---
   
-# POST /api/tasks
+### GET/api/tasks/:id
+
+Returns one task from the database 
+
+*Example request/response:*
+
+
+```HTTP STATUS 200 
+
+https://serene-peak-53258.herokuapp.com/api/tasks
+
+ [
+    {
+      "id": "1",
+      "name": "45-minute coding session",
+      "complete": "true",
+      "date_modified": "2020-04-24T05:15:33.375Z",
+      "user_id": 5,
+      "streaks": 12
+    },
+    {
+      "id": "10",
+      "name": "30-minute coding session",
+      "complete": "true",
+      "date_modified": "2020-04-24T05:15:33.375Z",
+      "user_id": 3,
+      "streaks": 19
+    }
+  ]
+  ```
+
+
+### POST /api/tasks
 
 Creates a new task. Requires a request body. 
 
@@ -84,7 +165,7 @@ POST https://serene-peak-53258.herokuapp.com/api/tasks
 
 --- 
  
-# PATCH /api/tasks/:id
+### PATCH /api/tasks/:id
 
 Updates task matching id with the fileds provided. Requires a request body with at least one valid field. 
 
@@ -103,7 +184,7 @@ POST https://serene-peak-53258.herokuapp.com/api/tasks/2
   HTTP STATUS 200 OK
  ```
  
-# DELETE /api/tasks/:id
+### DELETE /api/tasks/:id
 
 Deletes item matching id parameter
 
@@ -115,3 +196,8 @@ Deletes item matching id parameter
   HTTP STATUS 200 OK
   {} (empty)
 ```
+### To-do:'s
+
+- []  Finish implementing break notifications   
+- [ ] User registration 
+- [ ] Streak emoji updates based on streak count

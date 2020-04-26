@@ -2,18 +2,21 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 
+
+
 const AuthService = {
-  getUserWithUserName(db, user_name) {
+
+  getUserWithUserName(db, user_name) { // method responsible for getting first instance of user_name
     return db('commit_users')
       .where({
         user_name
       })
       .first();
   },
-  comparePasswords(password, hash) {
+  comparePasswords(password, hash) { // method responsible for comparing string & hashed passwords
     return bcrypt.compare(password, hash);
   },
-  createJwt(subject, payload) {
+  createJwt(subject, payload) { // method responsible for creating a jwt token 
     return jwt.sign(payload, config.JWT_SECRET, {
       subject,
       expiresIn: config.JWT_EXPIRY,
