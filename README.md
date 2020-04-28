@@ -12,7 +12,7 @@ Link to Heroku Server: https://serene-peak-53258.herokuapp.com/
 
 ### Technologies Used
 
-HTML, CSS, React, NodeJS, Express, PostgreSQL
+HTML, CSS, React, NodeJS, Express, PostgreSQL, Jest, and Chai 
 
 ### Screenshot 
 ![screenshot](./repo-image/server-side.png)
