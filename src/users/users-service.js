@@ -72,6 +72,11 @@ const UserService = {
       date_created: new Date(user.date_created),
     };
   },
+  updateStreaks(knex, updateUser, id) {
+    return knex('commit_users').where({
+      id
+    }).update(updateUser);
+  }
 };
 
 module.exports = UserService;

@@ -4,6 +4,7 @@ const xss = require('xss');
 const UserService = require('./users-service');
 const userRouter = express.Router();
 const jsonParser = express.json();
+const {requireAuth } = require('../middleware/jwt-auth');
 
 const serializeUser = user => ({
   id: user.id,
@@ -51,9 +52,10 @@ userRouter
 
 userRouter
   .route('/:user_id')
-  .all((req, res, next) => {
+  .get((req, res, next) => {
     const knexInstance = req.app.get('db');
-    UserService.getById(knexInstance, req.params.user_id)
+
+    UserService.getById(knexInstance, req.user.id)
       .then(user => {
         if (!user) {
           return res.status(404).json({
@@ -63,44 +65,43 @@ userRouter
           });
         }
         res.user = user;
-        next();
+       res.json(serializeUser(res.user));
+
+        
       })
       .catch(next);
-  })
-  .get((req, res, next) => {
-    res.json(serializeUser(res.user));
   })
   .delete((req, res, next) => {
     const knexInstance = req.app.get('db');
-    UserService.deleteUser(knexInstance, req.params.user_id)
+    UserService.deleteUser(knexInstance, req.user.id)
       .then(() => {
         res.status(204).end();
       })
       .catch(next);
   })
-  .patch(jsonParser, (req, res, next) => {
+  .patch(jsonParser, requireAuth, (req, res, next) => {
     const knexInstance = req.app.get('db');
     const {
-      username,
-      password
+      
+      streak
     } = req.body;
 
     const updateUser = {
-      username,
-      password
+      streak,
     };
-
+    
     const numberOfValues = Object.values(updateUser).filter(Boolean).length;
     if (numberOfValues === 0) {
+
       return res.status(400).json({
         error: {
-          message: 'Request body must contain, \'username, or password\''
+          message: 'Request body must contain streaks'
         }
       });
     }
-    UserService.updateUser(knexInstance, req.params.user_id, updateUser)
+    UserService.updateStreaks(knexInstance, updateUser, req.user.id)
       .then(() => {
-        res.status(204).end();
+        res.status(204).send('this streak was updated');
       });
   });
 module.exports = userRouter;
