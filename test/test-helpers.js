@@ -5,22 +5,26 @@ function makeUsersArray() {
   return [{
       id: 4,
       user_name: 'test-user-1',
-      password: 'password'
+      password: 'password',
+      streak: 4
     },
     {
       id: 8,
       user_name: 'test-user-2',
-      password: 'password'
+      password: 'password',
+      streak: 6
     },
     {
       id: 9,
       user_name: 'test-user-3',
-      password: 'password'
+      password: 'password',
+      streak: 9,
     },
     {
       id: 10,
       user_name: 'test-user-4',
-      password: 'password'
+      password: 'password',
+      streak: 10
     },
   ]
 }

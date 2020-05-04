@@ -8,6 +8,7 @@ const { NODE_ENV } = require('./config');
 const tasksRouter = require('./tasks/tasks-router');
 const userRouter = require('./users/users-router');
 const authRouter = require('./auth/auth-router');
+const streakRouter = require('./streak/streak-router');
 
 
 
@@ -41,6 +42,7 @@ app.use(cors());
 app.use('/api/tasks', tasksRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/streak', streakRouter)
 
 // request handling
 app.get('/', (req, res) => {

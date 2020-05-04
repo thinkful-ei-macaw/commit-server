@@ -33,7 +33,7 @@ tasksRouter
   .post(jsonParser, (req, res, next) => {
     const {name} = req.body; // Capturing the task name from the request body 
     const newTask = {name, complete: false, user_id: req.user.id}; // Passing task values into an object
-    TaskService.insertTask( // Callign method that inserts a new task into the database 
+    TaskService.insertTask( // Calling method that inserts a new task into the database 
       req.app.get('db'),
       newTask
     )
@@ -88,7 +88,7 @@ tasksRouter
     const knexInstance = req.app.get('db');
     const {name, complete} = req.body.task; // take values from body
     const newTask = {name, complete}; // storing values in variable
-    console.log(newTask)
+ 
     
     TaskService.updateTask( // pass newTask object and id to updateTask method when a task is marked complete
       knexInstance,

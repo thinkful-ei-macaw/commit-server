@@ -34,7 +34,7 @@ userRouter
       password
     };
     for (const [key, value] of Object.entries(newUser))
-      if (value == null)
+      if (!value)
         return res.status(400).json({
           error: {
             message: `${key} not in request body`
@@ -65,7 +65,7 @@ userRouter
           });
         }
         res.user = user;
-       res.json(serializeUser(res.user));
+        res.json(serializeUser(res.user));
 
         
       })
@@ -78,30 +78,6 @@ userRouter
         res.status(204).end();
       })
       .catch(next);
-  })
-  .patch(jsonParser, requireAuth, (req, res, next) => {
-    const knexInstance = req.app.get('db');
-    const {
-      
-      streak
-    } = req.body;
-
-    const updateUser = {
-      streak,
-    };
-    
-    const numberOfValues = Object.values(updateUser).filter(Boolean).length;
-    if (numberOfValues === 0) {
-
-      return res.status(400).json({
-        error: {
-          message: 'Request body must contain streaks'
-        }
-      });
-    }
-    UserService.updateStreaks(knexInstance, updateUser, req.user.id)
-      .then(() => {
-        res.status(204).send('this streak was updated');
-      });
   });
+ 
 module.exports = userRouter;
